@@ -6,6 +6,39 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
     <body>
-    <!--Add a registration form here -->
+            <H1>Sign Up</H1></br>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action='{% url 'djangoapp:registration' %}' method='POST'>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="usernameInput"><b>User Name</b></label>
+                <input type="text" class="form-control" id="usernameInput" placeholder="Enter User Name" name='username'>
+            </div>
+            <div class="form-group">
+                <label for="nameInput"><b>First Name</b></label>
+                <input type="text" class="form-control" id="nameInput" placeholder="Enter First Name" name='firstname'>
+            </div>
+            <div class="form-group">
+                <label for="lastnameInput"><b>Last Name</b></label>
+                <input type="text" class="form-control" id="surnameInput" placeholder="Enter Last Name" name='lastname'>
+            </div>
+            <div class="form-group">
+                <label for="passwordInput1"><b>Password</b></label>
+                <input type="password" class="form-control" id="passwordInput1" placeholder="Enter Password" name='psw1'>
+            </div>
+            <div class="form-group">
+                <label for="passwordInput2"><b>Confirm Password</b></label>
+                <input type="password" class="form-control" id="passwordInput2" placeholder="Confirm Password" name='psw2'>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </body>
 </html>
