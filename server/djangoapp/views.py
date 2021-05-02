@@ -18,20 +18,28 @@ logger = logging.getLogger(__name__)
 
 
 # Create an `about` view to render a static about page
-# def about(request):
-# ...
+def about(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'djangoapp/about.html', context)
 
 
 # Create a `contact` view to return a static contact page
-#def contact(request):
+def contact(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'djangoapp/contact.html', context)
 
 # Create a `login_request` view to handle sign in request
 # def login_request(request):
 # ...
 
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout(request):
+    print("Log out user {}".format(request.user.username))
+    logout(request)
+    messages.add_message(request, messages.SUCCESS, 'Logged Out Sucessfully')
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
 # def registration_request(request):
