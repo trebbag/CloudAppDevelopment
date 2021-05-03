@@ -50,7 +50,7 @@ class CarModel(models.Model):
                 ", Car Make: <" + str(self.CarMake) + " >"
 
 class CarDealer:
-    def __init__(self, address, city, full_name, id_val, lat, long_val, state, st, zip_val):
+    def __init__(self, address, city, full_name, id, lat, long, short_name, state, st, zip):
         # Dealer address
         self.address = address
         # Dealer city
@@ -58,17 +58,18 @@ class CarDealer:
         # Dealer Full Name
         self.full_name = full_name
         # Dealer id
-        self.id = id_val
+        self.id = id
         # Location lat
         self.lat = lat
         # Location long
-        self.long = long_val
+        self.long = long
         # Dealer short name
+        self.short_name = short_name
         self.state = state
         # Dealer state
         self.st = st
         # Dealer zip
-        self.zip = zip_val
+        self.zip = zip
     def __str__(self):
         return "Dealer name: " + self.full_name + \
                 ", City: " + self.city + \
@@ -78,11 +79,11 @@ class CarDealer:
 
 # Dealer Review class
 class DealerReview:
-    def __init__(self, id_review, dealership, name, \
-            purchase, review, purchase_date=None, car_make=None, \
-            car_model=None, car_year=None, sentiment=None):
+    def __init__(self, id, dealership, name, \
+            purchase, review, purchase_date, car_make, \
+            car_model, car_year, sentiment):
         # Review id
-        self.id = id_review
+        self.id = id
         # Dealership id
         self.dealership = dealership
         # Reviewer name

@@ -11,6 +11,79 @@
 
 </head>
     <body>
-    <!--Add review form here -->
+    <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li>
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username" >
+                        <input type="password" class="form-control" placeholder="Password" name="psw" >
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                    </div>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+    
+        <div class="container-fluid m-3">
+            <h2>Add a review about {{dealer.full_name}}</h2>
+            <form class="form" action="{% url 'djangoapp:add_review' dealer.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group col-8">
+                    <label for="content">Enter the review content:</label>
+                    <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+                </div>
+                <div class="form-group col-8 m-3">
+                    <input type="checkbox" class="form-check-input" name="purchase_check" id="purchase_check" checked> Has purchased the car from {{dealer.full_name}}? (select purchased car information below if checked)
+                </div>
+                <div id="car_select" class="form-group col-4">
+                    <label for="car">Select your car (model-make-year):</label>
+                    <select id="car" name="car" class="form-select">
+                        {% for car in cars %}
+                        <option selected value="{{car.id}}">{{car.name}}-{{car.make.name}}-{{car.year|date:"Y"}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="car_purchase_date" class="form-group col-2">
+                    <label for="purchase_date">Select Your Purchase Date:</label>
+                    <input class="date-own form-control" type="text" name="purchase_date" id="purchase_date">
+                </div>
+                <button class="btn btn-primary m-3" type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            $('.date-own').datepicker({
+                format: 'mm/dd/yyyy'
+            });
+
+            $('#purchase_check').change(function() {
+                $('#car').prop('required', this.checked)
+                $('#car_select').toggle(this.checked);
+                $('#car_purchase_date').toggle(this.checked);
+            });
+        })
+    </script>
     </body>
 </html>
